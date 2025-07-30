@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Number Utility Checker</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: #fff;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 500px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #2c3e50;
+      margin-bottom: 20px;
+    }
+
+    h3 {
+      margin-top: 30px;
+      color: #34495e;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      width: 70%;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      transition: 0.3s;
+      font-size: 16px;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #3498db;
+    }
+
+    input[type="button"] {
+      padding: 10px 20px;
+      background: #3498db;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 15px;
+    }
+
+    input[type="button"]:hover {
+      background: #2980b9;
+    }
+
+    p {
+      margin: 10px 0;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+
+    .success {
+      color: green;
+    }
+
+    .error {
+      color: red;
+    }
+
+    .output {
+      font-weight: bold;
+    }
+
+    .section {
+      border-top: 1px solid #eee;
+      padding-top: 20px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🔢 Number Utility Checker</h2>
+
+    <!-- Palindrome Checker -->
+    <div class="section">
+      <h3>🔁 Palindrome Checker</h3>
+      <input id="palindromeInput" type="text" placeholder="Enter a number">
+      <br>
+      <input type="button" value="Check" onclick="checkPalindrome()">
+      <p id="palindromeResult" class="output"></p>
+    </div>
+
+    <!-- Fibonacci Generator -->
+    <div class="section">
+      <h3>📈 Fibonacci Generator</h3>
+      <input id="fibonacciInput" type="text" placeholder="Enter count">
+      <br>
+      <input type="button" value="Generate" onclick="generateFibonacci()">
+      <p id="fibonacciResult" class="output"></p>
+    </div>
+
+    <!-- Factorial Calculator -->
+    <div class="section">
+      <h3>✳️ Factorial Calculator</h3>
+      <input id="factorialInput" type="text" placeholder="Enter a number">
+      <br>
+      <input type="button" value="Calculate" onclick="calculateFactorial()">
+      <p id="factorialResult" class="output"></p>
+    </div>
+  </div>
+
+  <script>
+    function checkPalindrome() {
+      const input = document.getElementById('palindromeInput').value.trim();
+      const result = document.getElementById('palindromeResult');
+      if (!/^\d+$/.test(input)) {
+        result.textContent = '❌ Please enter a valid number.';
+        result.className = 'output error';
+        return;
+      }
+      const reversed = input.split('').reverse().join('');
+      const isPalindrome = input === reversed;
+      result.textContent = isPalindrome ? '✅ The number is a palindrome.' : '❌ The number is not a palindrome.';
+      result.className = isPalindrome ? 'output success' : 'output error';
+    }
+
+    function generateFibonacci() {
+      const input = parseInt(document.getElementById('fibonacciInput').value);
+      const result = document.getElementById('fibonacciResult');
+      if (isNaN(input) || input <= 0) {
+        result.textContent = '❌ Please enter a positive integer.';
+        result.className = 'output error';
+        return;
+      }
+      let a = 0, b = 1, sequence = [];
+      for (let i = 0; i < input; i++) {
+        sequence.push(a);
+        [a, b] = [b, a + b];
+      }
+      result.textContent = '✅ Fibonacci Series: ' + sequence.join(', ');
+      result.className = 'output success';
+    }
+
+    function calculateFactorial() {
+      const input = parseInt(document.getElementById('factorialInput').value);
+      const result = document.getElementById('factorialResult');
+      if (isNaN(input) || input < 0) {
+        result.textContent = '❌ Please enter a non-negative integer.';
+        result.className = 'output error';
+        return;
+      }
+      let factorial = 1;
+      for (let i = 2; i <= input; i++) {
+        factorial *= i;
+      }
+      result.textContent = '✅ Factorial: ' + factorial;
+      result.className = 'output success';
+    }
+  </script>
+</body>
+</html>

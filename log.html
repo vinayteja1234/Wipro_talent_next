@@ -1,0 +1,383 @@
+html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Collections Learning Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a2a3a, #2c3e50);
+            color: var(--light);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding-bottom: 40px;
+        }
+
+        header {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 2.8rem;
+            color: var(--secondary);
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, var(--secondary), var(--success));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #bdc3c7;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+
+        .overview {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .overview h2 {
+            color: var(--secondary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .card h3 {
+            color: var(--success);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-icon {
+            font-size: 1.8rem;
+            color: var(--warning);
+        }
+
+        .card-content {
+            color: #ddd;
+        }
+
+        .card-content ul {
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+
+        .card-content li {
+            margin-bottom: 8px;
+        }
+
+        .comparison {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comparison h2 {
+            color: var(--warning);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        th {
+            background-color: rgba(52, 152, 219, 0.2);
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .complexity {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .complexity-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 20px;
+            width: 32%;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .complexity-card h3 {
+            color: var(--accent);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .resources {
+            margin-top: 40px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .resources h2 {
+            color: var(--success);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .resource-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .resource-item {
+            background: rgba(46, 204, 113, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            width: calc(50% - 10px);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .resource-item:hover {
+            transform: translateX(10px);
+            background: rgba(46, 204, 113, 0.15);
+        }
+
+        .resource-icon {
+            font-size: 1.8rem;
+            color: var(--success);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+
+        .highlight {
+            color: var(--warning);
+            font-weight: bold;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .btn:hover {
+            background: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.6);
+        }
+
+        .btn-cta {
+            background: linear-gradient(to right, var(--accent), var(--warning));
+            display: block;
+            width: 250px;
+            text-align: center;
+            margin: 30px auto 0;
+            font-size: 1.1rem;
+        }
+
+        .btn-cta:hover {
+            background: linear-gradient(to right, #c0392b, #e67e22);
+        }
+
+        @media (max-width: 768px) {
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+
+            .complexity {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .complexity-card {
+                width: 100%;
+            }
+
+            .resource-item {
+                width: 100%;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <i class="fas fa-code logo"></i>
+            <h1>Java Collections Learning Hub</h1>
+        </div>
+        <p class="subtitle">Master the Java Collections Framework with interactive guides, visual explanations, and practical examples</p>
+    </header>
+
+    <div class="container">
+        <section class="overview">
+            <h2><i class="fas fa-sitemap"></i> Collections Framework Overview</h2>
+            <p>The Java Collections Framework provides a well-designed set of interfaces and classes for storing and manipulating groups of data as a single unit. It's one of the most important APIs for everyday programming in Java.</p>
+
+            <div class="cards-container">
+                <div class="card">
+                    <h3><i class="fas fa-list card-icon"></i> Core Interfaces</h3>
+                    <div class="card-content">
+                        <ul>
+                            <li><span class="highlight">Collection</span> - Root interface</li>
+                            <li><span class="highlight">List</span> - Ordered collections (ArrayList, LinkedList)</li>
+                            <li><span class="highlight">Set</span> - Unique elements (HashSet, TreeSet)</li>
+                            <li><span class="highlight">Queue</span> - FIFO processing (PriorityQueue)</li>
+                            <li><span class="highlight">Map</span> - Key-value pairs (HashMap, TreeMap)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-cogs card-icon"></i> Key Concepts</h3>
+                    <div class="card-content">
+                        <ul>
+                            <li>Generics for type safety</li>
+                            <li>Iterators and enhanced for-loop</li>
+                            <li>Comparable and Comparator interfaces</li>
+                            <li>Fail-fast vs Fail-safe iterators</li>
+                            <li>Concurrent collections</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-lightbulb card-icon"></i> When to Use</h3>
+                    <div class="card-content">
+                        <ul>
+                            <li>ArrayList - Frequent access by index</li>
+                            <li>LinkedList - Frequent insertions/removals</li>
+                            <li>HashSet - Unique elements, no ordering</li>
+                            <li>TreeSet - Sorted unique elements</li>
+                            <li>HashMap - Key-value storage</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <a href="#" class="btn btn-cta">Start Learning Journey <i class="fas fa-arrow-right"></i></a>
+        </section>
+
+        <section class="comparison">
+            <h2><i class="fas fa-balance-scale"></i> Collection Types Comparison</h2>
